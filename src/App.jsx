@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const movies = [
+const allMovies = [
   { title: 'Inception', genere: 'Fantascienza' },
   { title: 'Il Padrino', genere: 'Thriller' },
   { title: 'Titanic', genere: 'Romantico' },
@@ -10,7 +10,8 @@ const movies = [
 ]
 
 function App() {
-  const [filteredMovie, setFilteredMovie] = useState(movies)
+  const [filteredMovie, setFilteredMovie] = useState(allMovies)
+  const [movies, setMovies] = useState(allMovies)
   const [search, setSearch] = useState('')
   const [genere, setGenere] = useState('')
   const [newMovie, setNewMovie] = useState('')
@@ -19,11 +20,20 @@ function App() {
   useEffect(() => {
     setFilteredMovie(movies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase()) && movie.genere.includes(genere)))
 
-  }, [search, genere])
+  }, [movies, search, genere])
 
 
   function handleFormSubmit(e) {
     e.preventDefault(e)
+
+    const newMovieObj = {
+      title: newMovie,
+      genere: addGenere
+    }
+
+    setMovies([newMovieObj, ...movies])
+    setNewMovie('')
+    setAddGenere('')
   }
 
 
