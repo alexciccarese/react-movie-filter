@@ -9,14 +9,17 @@ const movies = [
   { title: 'Pulp Fiction', genere: 'Thriller' },
 ]
 
-
 function App() {
   const [filteredMovie, setFilteredMovie] = useState(movies)
   const [search, setSearch] = useState('')
+  const [genere, setGenere] = useState('')
 
   useEffect(() => {
-    setFilteredMovie(movies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase())))
-  }, [search])
+    setFilteredMovie(movies.filter(movie => movie.title.toLowerCase().includes(search.toLowerCase()) && movie.genere.includes(genere)))
+
+  }, [search, genere])
+
+
 
   return (
     <>
@@ -34,6 +37,21 @@ function App() {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
+
+        <select 
+        className="form-select form-select-lg mt-3" 
+        aria-label="genere-helper"
+        id='genere-movie'
+        value={genere}
+        onChange={e => setGenere(e.target.value)}
+
+        >
+          <option value="">Seleziona genere (nessuna selezoione)</option>
+          <option value="Fantascienza">Fantascienza</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Romantico">Romantico</option>
+          <option value="Azione">Azione</option>
+        </select>
 
 
 
